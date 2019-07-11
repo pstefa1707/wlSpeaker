@@ -1,0 +1,195 @@
+@import url('//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css');
+
+html {
+	font-size: calc(1em + 1vw);
+	overflow-x: hidden;
+}
+
+#player {
+	align-content: center;
+}
+
+#player a {
+	color: #eeeeee;
+
+}
+
+.hide {
+	display: none;
+}
+
+.show {
+	display: block;
+}
+
+.controls {
+	margin-top: 0.25em;
+
+	list-style: none;
+	background: #222831;
+	display: flex;
+	padding: .5em;
+	justify-content: space-around;
+	align-items: stretch;
+	border-radius: 10%;
+}
+
+.controls li {
+	width: 4em;
+	border-radius: 10%;
+	transition-duration: 0.2s;
+}
+
+.controls li:hover {
+	background: #00adb5;
+	cursor: pointer;
+}
+
+.controls li:active {
+	background: #007279;
+}
+
+body {
+	font-family: Garamond,Baskerville,Baskerville Old Face,Hoefler Text,Times New Roman,serif; 
+	color: #eeeeee;
+	background: #393e46;
+	text-align: center;
+	margin: 0;
+	display:flex;
+	flex-direction: column;
+	align-items: center;
+	align-content: space-between;
+}
+
+#hdr {
+	height: 5em;
+	width: 60em;
+	margin-bottom: 0;
+	text-align: center;
+}
+
+#hdr h1 {
+	display: inline-block;
+	font-family: Futura,Trebuchet MS,Arial,sans-serif; 
+}
+
+#vc {
+	background: white;
+	height: 3em;
+	width: 1px;
+}
+
+img {
+	filter: invert(1) brightness(1) saturate(10000%);
+	height: 3em;
+	display: block;
+	margin: 0 auto;
+}
+
+#queue h3{
+	display: inline-block;
+}
+
+#addSongs{
+	display: inline-block;
+	vertical-align:text-top;
+	width: 1em;
+	border-radius: 10%;
+	background: #222831;
+	transition-duration: 0.2s;
+}
+
+#addSongs:hover {
+	background: #00adb5;
+	cursor: pointer;
+}
+
+footer {
+	background: #393e46;
+	height: 1.5em;
+	border-top: 1px solid #00adb5;
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+}
+
+#cpstefa {
+	color: white;
+	text-align: center;
+	font-size: 0.5em;
+	bottom: 1em;
+}
+
+a:visited {
+	color: white;
+}
+
+a:hover {
+	color: #00adb5;
+}
+
+#addQueue {
+	background: #222831;
+	border: 1px solid transparent;
+}
+
+#addQueue:hover {
+	background: #00adb5;
+	cursor: pointer;
+}
+
+#addQueue:active {
+	background: #007279;
+}
+
+#addQueue, #playlist {
+	display: inline-block;
+  	padding: 1em;
+  	font-size: 0.5em;
+  	border-radius: 5%;
+  	-webkit-appearance: none;
+  	transition-duration: 0.2s;
+}
+
+#playlist {
+	border: 1px solid lightgray;
+}
+
+#queueList {
+	text-align: left;
+	padding-bottom: 2em;
+}
+
+#cover-spin {
+    position:fixed;
+    width:100%;
+    left:0;right:0;top:0;bottom:0;
+    background-color: rgba(255,255,255,0.7);
+    z-index:9999;
+    display:none;
+}
+
+@-webkit-keyframes spin {
+	from {-webkit-transform:rotate(0deg);}
+	to {-webkit-transform:rotate(360deg);}
+}
+
+@keyframes spin {
+	from {transform:rotate(0deg);}
+	to {transform:rotate(360deg);}
+}
+
+#cover-spin:after {
+    content:'';
+    display:block;
+    position:absolute;
+    left:48%;top:40%;
+    width:40px;height:40px;
+    border-style:solid;
+    border-color:black;
+    border-top-color:transparent;
+    border-width: 4px;
+    border-radius:50%;
+    -webkit-animation: spin .8s linear infinite;
+    animation: spin .8s linear infinite;
+}

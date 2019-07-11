@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+	<meta charset = "UTF-8">
+ 	<title>{{current.song}}</title>
+ 	<link rel="stylesheet" type="text/css" href="/static/style.css"/>
+ 	<link rel="stylesheet" type="text/css" href="/static/normalize.css"/>
+ 	 <div id="hdr">
+		<h1>Media Player</h1>		
+	</div>
+	<hr width="80%" align="center"/>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+	<script type="text/javascript" charset="utf-8">
+		window.onload = function() {		
+			//Connect To Socket
+		    var socket = io();
+		    socket.on('connect', function() {
+		        socket.emit('newConnection');
+		    });
+
+		    //Handle Control Clicks
+		    document.getElementById("previous").addEventListener("click", function(){
+		    	socket.emit('control', 'previous');
+		    });
+
+		    document.getElementById("play_pause").addEventListener("click", function(){
+		    	socket.emit('control', 'play_pause');
+		    });
+
+		  	document.getElementById("skip").addEventListener("click", function(){
+		    	socket.emit('control', 'skip');
+		    });
+
+		    //Add to Queue
+		    document.getElementById("addSongs").addEventListener("click", function(){
+		    	if (document.getElementById("addPl").className == "hide") 
+		    	{
+		    		document.getElementById("addPl").className = "show";
+		    		document.getElementById("addSongs").innerHTML = "−";6
+		    	}
+		    	else 
+		    	{
+		    		document.getElementById("addPl").className = "hide";
+		    		document.getElementById("addSongs").innerHTML = "+";
+		    	}
+		    });
+
+		    document.getElementById("addQueue").addEventListener("click", function() {
+		    	val = document.getElementById("playlist").value;
+		    	if (val != null) {
+		    		socket.emit('appendQueue', val);
+		    		console.log("Emitted new queue")
+		    		document.getElementById("cover-spin").style.display="block";
+		    	} else {
+		    		window.alert("Enter a URL!");
+		    	}
+		    	
+		    });
+		    //Handle status change
+		    socket.on('statusChange', function(status){
+		    	console.log("Status Changed!: " + status);
+		    	if (status) {
+		    		document.getElementById("play_pause").innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Octicons-playback-pause.svg"/>'
+		    	} else {
+		    		document.getElementById("play_pause").innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Octicons-playback-play.svg"/>'
+		    	}
+		    });
+
+		    //Handle queue change
+		    socket.on('queueChange', function(queue) {
+		    	console.log("Queue Changed!: " + queue);
+		    	document.getElementById("queueList").innerHTML = "";
+	    		for (let i = 0; i < queue['songs'].length; i ++)
+	    		{
+	    			document.getElementById("queueList").innerHTML += '<li>' + queue['songs'][i] + '</li>';
+	    		}
+	    		document.getElementById("cover-spin").style.display="none";
+		    });
+
+		    //Handle song change
+		    socket.on('songChange', function(current){
+		    	console.log("Song Changed!");
+		    	document.getElementById("currSong").href = current[0];
+		    	document.getElementById("currSong").innerHTML = current[1];
+		    });
+		}
+
+	</script>
+</head>
+<body>
+	<div id="player">
+		<h3>Now Playing</h3>
+		<a id="currSong" href="{{current.url}}"> {{current.song}}</a>
+		<ul class="controls">
+			<li id="previous"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d2/Octicons-playback-rewind.svg"/></li>
+			<div id="vc"></div>
+			<li id="play_pause">{% if play == false %}<img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Octicons-playback-play.svg"/> {% else %}<img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Octicons-playback-pause.svg"/> {% endif %}</li>
+			<div id="vc"></div>
+			<li id="skip"><img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Octicons-playback-fast-forward.svg"/></li>
+		</div> 
+	</div>
+	<hr width="40%" align="center">
+	<div id="queue">
+		<div id="cover-spin"></div>
+		<h3>Queue</h3>
+		<div id="addSongs">+</div>
+		<div id="addPl" class="hide">
+			<input id="playlist" type="text" placeholder="Spotify Url"/>
+			<div id="addQueue">></div>
+		</div>
+		<ol id="queueList">
+			{% for song in queue['songs'] %}
+				<li>{{song}}</li>
+			{% endfor %}
+		</ol>
+	</div>
+</body>
+<footer>
+	<a id="cpstefa" href="https://github.com/pstefa1707"> © pstefa1707 </a>
+</footer>
+</html>
