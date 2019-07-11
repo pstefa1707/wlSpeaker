@@ -1,7 +1,7 @@
 # wlSpeaker
 Make a speaker wireless with the use of a raspberry Pi or similar
 
-# Alt-H1 dependencies
+# dependencies
  -Python v3.6+
  
  -VLC 64bit
@@ -14,3 +14,8 @@ Navigate to directory of "Requirements.txt"
 
 **Windows**
 `python -m pip install -r Requirements.txt`
+
+# Usage
+**Linux** `python3 main.py`
+
+**Windows** `python main.py`
