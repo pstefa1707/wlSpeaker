@@ -10,6 +10,9 @@ Make a speaker wireless with the use of a raspberry Pi or similar
 Navigate to directory of "Requirements.txt"
 
 **Linux**
+
+`suo apt install python3-setuptools`
+
 `python3 -m pip install -r Requirements.txt`
 
 **Windows**
